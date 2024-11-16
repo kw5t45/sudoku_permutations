@@ -1,3 +1,5 @@
+from pprint_sdk import pprint_sdk
+
 sdk = [
     #  1 2| 3 4
     #  3 4| 1 2
@@ -80,31 +82,19 @@ def switcharoo(sdk: list[list[int]], permutation: str, p: str) -> list[list[int]
     return sdk
 
 
-for i in sdk:
-    print(i)
+pprint_sdk(sdk)
 while True:
     x = input('enter switch coords (0102) up to (4344) and r or c switch.\n')
     if x == 'INITIAL':
         for i in sdk_:
             print(i)
+    elif x == 'RESTART':
+        sdk = sdk_
+        continue
     else:
         try:
             sdk = (switcharoo(sdk, x[:4], x[-1]))
         except:
             continue
-        for i in sdk:
-            print(i)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        pprint_sdk(sdk)
