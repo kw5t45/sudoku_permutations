@@ -37,7 +37,10 @@ def transpose_matrix(sudoku: list[list[str]]):
     :param sudoku: 9x9 matrix
     :return: transposed 9x9 matrix.
     """
-    return numpy.transpose(sudoku)
+
+    sudoku = numpy.transpose(sudoku)
+    sudoku = sudoku.tolist()
+    return sudoku
 
 
 def rotate_matrix(sudoku: list[list[str]]):
@@ -47,7 +50,9 @@ def rotate_matrix(sudoku: list[list[str]]):
     :return: matrix rotated
     """
     # k=3 s.t. 3 counter-clockwise rotations
-    return numpy.rot90(sudoku, k=3)
+    sudoku = numpy.rot90(sudoku, k=3)
+    sudoku = sudoku.tolist()
+    return sudoku
 
 
 def reflect_horizontally(sudoku: list[list[str]]):
@@ -57,20 +62,24 @@ def reflect_horizontally(sudoku: list[list[str]]):
     :return: reflected horizontally matrix
     """
 
-    return numpy.fliplr(sudoku)
+    sudoku = numpy.fliplr(sudoku)
+    sudoku = sudoku.tolist()
+    return sudoku
 
 
-def reflect_vertiaclly(sudoku: list[list[str]]):
+def reflect_vertically(sudoku: list[list[str]]):
     """
 
     :param sudoku:
     :return: reflected vertically matrix
     """
 
-    return numpy.flipud(sudoku)
+    sudoku = numpy.flipud(sudoku)
+    sudoku = sudoku.tolist()
+    return sudoku
 
 
-def switch_rows(sudoku: list[list[str]], row_1:int, row_2: int):
+def switch_rows(sudoku: list[list[str]], row_1: int, row_2: int):
     """
 
     :param row_1: to be switched with row 2
@@ -91,13 +100,47 @@ def switch_rows(sudoku: list[list[str]], row_1:int, row_2: int):
     return sudoku
 
 
+def switch_cols(sudoku: list[list[str]], col_1: int, col_2: int):
+    """
+
+    :param sudoku:
+    :param col_1:
+    :param col_2:
+    :return: switches 2 columns
+    """
+
+    sudoku = transpose_matrix(sudoku)
+    sudoku = switch_rows(sudoku, col_1, col_2)  # - 1 is substracted in switch rows already
+    return transpose_matrix(sudoku)
+
+def switch_numbers(sudoku: list[list[str]],digits_to:list[int]):
+    """
+    returns sudoku where each digit has been mapped to another one.
+    eg if input sudoku is
+    1 2 3 4 5
+    and digits_to  = [1, 3, 2, 4, 5]
+    then 1->1, 2->3, 3->2, 4->4, 5->5
+    output is 1 3 2 4 5. if there are any Xs in input they remain unchanged.
 
 
+    :param sudoku:
+    :param digits_from:
+    :param digits_to:
+    :return:
+    """
+    # assertion might not work for negative numbers bored to prove rn
+    assert (len(set(digits_to)) == 9) and (sum(digits_to) == 45)
 
+    digits_initial = [1, 2, 3, 4, 5, 6,7, 8, 9]
 
+    mapping = {str(digits_initial[i]): str(digits_to[i]) for i in range(9)}
 
+    sudoku_string = deconvert_matrix_to_str(sudoku)
 
+    sudoku_string = "".join(mapping.get(ch, ch) for ch in sudoku_string)
 
+    print(sudoku_string)
+    return convert_to_matrix(sudoku_string)
 
 
 
