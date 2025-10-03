@@ -1,9 +1,11 @@
 import matplotlib.pyplot as plt
 from permutations import deconvert_matrix_to_str
 
-def visualize_sdk(sudoku: str | list[list[str]], title: str = ''):
+
+def visualize_sdk(sudoku: str | list[list[str]], inital_grid: str = '', title: str = ''):
     """
 
+    :param inital_grid: inital grid to be plotted in different color.
     :param sudoku: can be both 81 length string or matrix
     :param title: if you want
     :return: creates a grid of cells.
@@ -27,15 +29,22 @@ def visualize_sdk(sudoku: str | list[list[str]], title: str = ''):
         else:
             ax.axhline(y, lw=1, color='black', zorder=5)
 
-
     for i in range(rows):
         for j in range(cols):
-            ax.text(
-                j + 0.5,  # x-position (center of cell)
-                i + 0.5,  # y-position (center of cell)
-                sudoku[i * 9 + j], # unpacking the input text or number
-                ha="center", va="center", fontsize=15, color="black"
-            )
+            if inital_grid != '' and inital_grid[i * 9 + j] != 'X':
+                # Draw original grid values in black
+                ax.text(
+                    j + 0.5, i + 0.5,
+                    inital_grid[i * 9 + j],
+                    ha="center", va="center", fontsize=15, color="black"
+                )
+            elif sudoku[i * 9 + j] != 'X':
+                # Draw solved/updated values in blue
+                ax.text(
+                    j + 0.5, i + 0.5,
+                    sudoku[i * 9 + j],
+                    ha="center", va="center", fontsize=15, color="blue"
+                )
 
     # need to rotate bc its 0 0 at bottom left
 
@@ -49,5 +58,3 @@ def visualize_sdk(sudoku: str | list[list[str]], title: str = ''):
     ax.invert_yaxis()
 
     plt.show()
-
-

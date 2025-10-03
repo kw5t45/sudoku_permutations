@@ -1,7 +1,10 @@
 import numpy
+import pandas as pd
 
+def _check_list_uniqueness(l: list):
+    return len(l) == len(set(map(tuple, l)))
 
-def convert_to_matrix(sudoku: str):
+def convert_to_matrix(sudoku: str, int_form=True):
     """
 
     :param sudoku: 81 len sudoku string
@@ -13,7 +16,14 @@ def convert_to_matrix(sudoku: str):
     for row in range(0, 9):
         row_list = []
         for col in range(0, 9):
-            row_list.append(sudoku[row * 9 + col])
+            if int_form:
+                if sudoku[row * 9 + col] == 'X':
+                    row_list.append(0)
+                else:
+                    row_list.append(int(sudoku[row * 9 + col]))
+            else:
+                row_list.append(sudoku[row * 9 + col])
+
         matrix.append(row_list)
     return matrix
 
@@ -24,6 +34,10 @@ def deconvert_matrix_to_str(sudoku: list[list[str]]) -> str:
     :param sudoku: 9x9 matrix
     :return: 81 length string
     """
+    for i in range(9):
+        for j in range(9):
+            if type(sudoku[i][j]) == int:
+                sudoku[i][j] = str(sudoku[i][j])
     sdk = []
     for i in range(0, 9):
         _ = "".join(sudoku[i])
@@ -139,8 +153,30 @@ def switch_numbers(sudoku: list[list[str]],digits_to:list[int]):
 
     sudoku_string = "".join(mapping.get(ch, ch) for ch in sudoku_string)
 
-    print(sudoku_string)
     return convert_to_matrix(sudoku_string)
+
+def save_solutions_to_csv(solutions: list[list[list[int]]], unsolved: str):
+    """
+
+    :param solutions: list of all possible solutions
+    :param unsolved: for given unsolved str sudoku
+    :return: saves to csv as string under string etc.
+    """
+
+    final = [unsolved]
+    for solution in solutions:
+        final.append(deconvert_matrix_to_str(solution))
+
+    df = pd.DataFrame(final, columns=None)
+    df.to_csv(f'{unsolved}.csv', index=False)
+
+
+def identity(sudoku):
+    return sudoku
+
+
+
+
 
 
 
