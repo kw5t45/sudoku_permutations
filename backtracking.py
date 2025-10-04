@@ -85,18 +85,18 @@ def backtrack(grid, row, col):
     return False
 
 
-sdk_valid = '564312897X9X64XXXXXXX97XXXX456123789789456123123789456XXX231XXXXXX564XXXXXX897XXX'
-assert len(sdk_valid) == 81
-
-grid = convert_to_matrix(sdk_valid)
-backtrack(grid, 0, 0)
-print(validate_sudoku(grid))
-
-
-
-print(len(solutions))
-
-print(deconvert_matrix_to_str(solutions[3]))
-# for index, value in enumerate(solutions):
-#     visualize_sdk(value, title=f'Solution no. {index + 1}', inital_grid=sdk_valid)
-save_solutions_to_csv(solutions, sdk_valid)
+# sdk_valid = '564312897X9X64XXXXXXX97XXXX456123789789456123123789456XXX231XXXXXX564XXXXXX897XXX'
+# assert len(sdk_valid) == 81
+#
+# grid = convert_to_matrix(sdk_valid)
+# backtrack(grid, 0, 0)
+# print(validate_sudoku(grid))
+#
+#
+#
+# print(len(solutions))
+#
+# print(deconvert_matrix_to_str(solutions[3]))
+# # for index, value in enumerate(solutions):
+# #     visualize_sdk(value, title=f'Solution no. {index + 1}', inital_grid=sdk_valid)
+# save_solutions_to_csv(solutions, sdk_valid)

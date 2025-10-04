@@ -31,14 +31,14 @@ def visualize_sdk(sudoku: str | list[list[str]], inital_grid: str = '', title: s
 
     for i in range(rows):
         for j in range(cols):
-            if inital_grid != '' and inital_grid[i * 9 + j] != 'X':
+            if inital_grid != '' and inital_grid[i * 9 + j] not in ['X', 0, '0']:
                 # Draw original grid values in black
                 ax.text(
                     j + 0.5, i + 0.5,
                     inital_grid[i * 9 + j],
                     ha="center", va="center", fontsize=15, color="black"
                 )
-            elif sudoku[i * 9 + j] != 'X':
+            elif sudoku[i * 9 + j] not in ['X', 0, '0']:
                 # Draw solved/updated values in blue
                 ax.text(
                     j + 0.5, i + 0.5,
