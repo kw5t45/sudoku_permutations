@@ -36,8 +36,6 @@ def validate_sudoku(sdk: str) -> bool:
 
 
 
-M = 9
-solutions = []
 
 def puzzle(a):
     for i in range(M):
@@ -64,19 +62,19 @@ def validate_candidate(grid, row, col, num):
     return True
 
 
-def backtrack(grid, row, col):
+def backtrack(grid, row, col, solutions):
     if (row == 8 and col == 9):
         return True
     if col == 9:
         row += 1
         col = 0
     if grid[row][col] > 0:
-        return backtrack(grid, row, col + 1)
+        return backtrack(grid, row, col + 1, solutions)
     for num in range(1, 10):
         if validate_candidate(grid, row, col, num):
 
             grid[row][col] = num
-            if backtrack(grid, row, col + 1):
+            if backtrack(grid, row, col + 1, solutions):
                 if grid not in solutions:
                     solutions.append([row[:] for row in grid])
                 else:

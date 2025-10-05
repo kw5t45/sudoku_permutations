@@ -68,10 +68,17 @@ def run_permutations(grid: str | list[list[int]], visualize: bool =True):
             visualize_sdk(deconvert_matrix_to_str(grid_matrix))
         permutation = input('Enter a permutation for given sudoku:')
 
-    return
+    return grid_matrix
 
-run_permutations(sdk_valid)
+''' TO DO: validate given sudoku in run_perms, whether complete or not
+ add solver in run perms, save and stuff.
+'''
 
+#run_permutations(sdk_valid)
 
+solutions = []
+grid = convert_to_matrix(sdk_valid)
+backtrack(grid, 0, 0, solutions)
+visualize_sdk(solutions[0], inital_grid=sdk_valid)
 
 
